@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="d3.js"></script>
+    <script src="q1.js"></script>
+    <script src="q2.js"></script>
+    <title>Visualizations</title>
+</head>
+<body>
+
+<div>
+    <div>Question 1</div>
+    <div style="text-align: center">
+        <div>Each country's net gain in USD from donation (negative means this country donates more than it receives)</div>
+        <svg id="q1l"></svg>
+    </div>
+    <div style="text-align: center">
+        <svg id="q1"></svg>
+    </div>
+</div>
+
+<hr>
+
+<div>
+    <div>Question 2</div>
+    <div style="text-align: center">
+        <div>The amount of money collected for the purpose / Sum of top 10 purposes' money collected that year (in %)</div>
+        <svg id="q2l"></svg>
+    </div>
+    <div>
+        <svg id="q2"></svg>
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+    let store = {
+        aid: []
+    }
+    let rawData = [];
+
+    loadData().then(
+        () => {
+            rawData = store.aid;
+        }
+    ).then(
+        () => {
+            // data roughly prepared
+            q1Visualization(rawData);
+            q2Visualization();
+        }
+    )
+    ;
+
+    function loadData() {
+        return Promise.all([
+            d3.csv('aiddata.csv')
+        ]).then(
+            (datasets) => {
+                store['aid'] = datasets[0];
+                return store;
+            }
+        )
+    }
+
+</script>
